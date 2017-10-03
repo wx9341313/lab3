@@ -12,6 +12,8 @@ EncoderMeasurement::EncoderMeasurement(int motor_type):
     encoder2CountPrev(0),
     v_R(0), v_L(0)
 {
+
+
     float rev2enc, gearing;
     if(motor_type == 53){
         rev2enc = rev2enc_53;
