@@ -9,6 +9,7 @@ import numpy as np
 import threading
 import serial
 import tf.transformations as tfm
+from me212bot.msg import WheelCmdVel
 
 
 from apriltags_ros.msg import AprilTagDetectionArray
@@ -39,11 +40,11 @@ def constant_vel_loop():
     rate = rospy.Rate(100) # 100hz
     
     while not rospy.is_shutdown() :
-        ##wcv = WheelCmdVel()
-        ##wcv.desiredWV_R = ???
-        ##wcv.desiredWV_L = ???
+        wcv = WheelCmdVel()
+        wcv.desiredWV_R = 0.1
+        wcv.desiredWV_L = 0.2
         
-        ##velcmd_pub.publish(???) 
+        velcmd_pub.publish(wcv) 
         
         rate.sleep() 
 
@@ -53,7 +54,9 @@ def apriltag_callback(data):
     if len(data.detections)!=0:  # check if apriltag is detected
     	detection = data.detections[0]
     	print detection.pose 
-    	if detection.id == 21:   # tag id is the correct one
+    	if detection.id == 21:   
+		print 'detection'		
+		# tag id is the correct one
 		# Use the functions in helper.py to do the following 
 		# step 1. convert the pose to poselist Hint: pose data => detection.pose.pose 
 		# step 2. do the matrix manipulation 
